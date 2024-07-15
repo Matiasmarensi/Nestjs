@@ -1,5 +1,14 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Patch,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { TasksService } from './tasks.service';
+import { Task, TaskStatus } from './tasks.entity';
 
 @Controller({})
 export class TasksController {
@@ -10,5 +19,26 @@ export class TasksController {
   @Get('/tasks')
   getAllTasks() {
     return this.tasksService.getAllTasks();
+  }
+  @Post('/tasks')
+  createTask(
+    @Body('title') title: string,
+    @Body('description') description: string,
+    @Body('status') status: TaskStatus,
+  ): Task {
+    console.log(`title = ${title}`);
+    return this.tasksService.createTask(title, description, status);
+  }
+  @Put()
+  updateTask() {
+    return 'update tarea';
+  }
+  @Patch()
+  updateTaskStatus() {
+    return 'patch tarea';
+  }
+  @Delete()
+  deleteTask() {
+    return 'eliminando tarea';
   }
 }

@@ -23,11 +23,19 @@ export class TasksService {
       description,
       status,
     };
+
     this.tasks.push(task);
     return task;
   }
 
-  updateTask() {}
+  updateTask() {
+    return 'update tarea';
+  }
 
-  deleteTask() {}
+  deleteTask() {
+    return 'delete tarea';
+  }
+  updateTaskStatus() {
+    return 'patch tarea';
+  }
 }
