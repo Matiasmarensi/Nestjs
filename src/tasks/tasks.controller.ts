@@ -1,17 +1,14 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 
-@Controller('tasks')
+@Controller({})
 export class TasksController {
-  constructor(private tasksService: TasksService) {}
-  @Get()
+  tasksService: TasksService;
+  constructor(tasksService: TasksService) {
+    this.tasksService = tasksService;
+  }
+  @Get('/tasks')
   getAllTasks() {
     return this.tasksService.getAllTasks();
-  }
-  @Post()
-  createTask(@Body() newTask: any) {
-    console.log(newTask);
-
-    return 'creando task';
   }
 }
