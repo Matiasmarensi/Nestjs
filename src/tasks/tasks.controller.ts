@@ -8,6 +8,7 @@ import {
   Post,
   Put,
   Query,
+  UsePipes,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Task, TaskStatus } from './tasks.entity';
@@ -29,6 +30,7 @@ export class TasksController {
     return this.tasksService.getTask(id);
   }
   @Post()
+  @UsePipes()
   createTask(@Body() task: createTaskDto): createTaskDto {
     return this.tasksService.createTask(task);
   }
