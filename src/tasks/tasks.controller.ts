@@ -9,6 +9,7 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
   UsePipes,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
@@ -16,6 +17,7 @@ import { Task, TaskStatus } from './tasks.entity';
 import { createTaskDto } from './dto/create-task.dto';
 import { updateTaskDto } from './dto/update-task.dto';
 import { SaludoPipe } from './pipes/saludo/saludo.pipe';
+import { AuthGuard } from './guard/auth/auth.guard';
 
 @Controller('/tasks')
 export class TasksController {
@@ -28,6 +30,7 @@ export class TasksController {
     return this.tasksService.getAllTasks();
   }
   @Get('/saludar')
+  @UseGuards(AuthGuard)
   saludar(@Query(SaludoPipe) query: { name: string; age: number }) {
     console.log(query);
     return 'Hola soy ' + query.name + ' y tengo ' + (query.age + 10) + ' años';
