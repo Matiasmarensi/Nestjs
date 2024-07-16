@@ -6,6 +6,8 @@ import {
 } from '@nestjs/common';
 import { Task, TaskStatus } from './tasks.entity';
 import { v4 } from 'uuid';
+import { createTaskDto } from './dto/create-task.dto';
+import { updateTaskDto } from './dto/update-task.dto';
 
 @Injectable()
 export class TasksService {
@@ -14,15 +16,13 @@ export class TasksService {
     return this.tasks;
   }
 
-  createTask(title: string, description: string, status: TaskStatus) {
+  createTask(taskDto: createTaskDto) {
     const task = {
+      ...taskDto,
       id: v4(),
-      title,
-      description,
-      status,
     };
-
     this.tasks.push(task);
+
     return task;
   }
   getTask(id: string) {
@@ -33,7 +33,8 @@ export class TasksService {
     return taskFound;
   }
 
-  updateTask() {
+  updateTask(task: updateTaskDto, id: string) {
+    console.log('updateTask', task);
     return 'update tarea';
   }
 
