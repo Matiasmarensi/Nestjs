@@ -1,17 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common';
 import { Task, TaskStatus } from './tasks.entity';
 import { v4 } from 'uuid';
 
 @Injectable()
 export class TasksService {
-  private tasks: Task[] = [
-    {
-      id: '1',
-      title: 'Task 1',
-      description: 'Task 1',
-      status: TaskStatus.PENDING,
-    },
-  ];
+  private tasks: Task[] = [];
   getAllTasks() {
     return this.tasks;
   }
@@ -26,6 +24,13 @@ export class TasksService {
 
     this.tasks.push(task);
     return task;
+  }
+  getTask(id: string) {
+    const taskFound = this.tasks.find((task) => task.id === id);
+    if (!taskFound) {
+      return new NotFoundException('task not found');
+    }
+    return taskFound;
   }
 
   updateTask() {

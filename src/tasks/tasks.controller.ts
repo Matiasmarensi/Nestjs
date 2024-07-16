@@ -3,30 +3,35 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Patch,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Task, TaskStatus } from './tasks.entity';
 
-@Controller({})
+@Controller('/tasks')
 export class TasksController {
   tasksService: TasksService;
   constructor(tasksService: TasksService) {
     this.tasksService = tasksService;
   }
-  @Get('/tasks')
-  getAllTasks() {
+  @Get()
+  getAllTasks(@Query() query: any) {
     return this.tasksService.getAllTasks();
   }
-  @Post('/tasks')
+  @Get('/:id')
+  getTask(@Param('id') id: string) {
+    return this.tasksService.getTask(id);
+  }
+  @Post()
   createTask(
     @Body('title') title: string,
     @Body('description') description: string,
     @Body('status') status: TaskStatus,
   ): Task {
-    console.log(`title = ${title}`);
     return this.tasksService.createTask(title, description, status);
   }
   @Put()
