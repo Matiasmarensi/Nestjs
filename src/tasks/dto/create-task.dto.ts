@@ -15,4 +15,5 @@ export class createTaskDto {
   description: string;
   @IsString()
   status: TaskStatus;
+  order: number;
 }

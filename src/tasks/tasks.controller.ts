@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Put,
@@ -14,6 +15,7 @@ import { TasksService } from './tasks.service';
 import { Task, TaskStatus } from './tasks.entity';
 import { createTaskDto } from './dto/create-task.dto';
 import { updateTaskDto } from './dto/update-task.dto';
+import { SaludoPipe } from './pipes/saludo/saludo.pipe';
 
 @Controller('/tasks')
 export class TasksController {
@@ -25,6 +27,11 @@ export class TasksController {
   getAllTasks(@Query() query: any) {
     return this.tasksService.getAllTasks();
   }
+  @Get('/saludar')
+  saludar(@Query(SaludoPipe) query: { name: string; age: number }) {
+    console.log(query);
+    return 'Hola soy ' + query.name + ' y tengo ' + (query.age + 10) + ' años';
+  }
   @Get('/:id')
   getTask(@Param('id') id: string) {
     return this.tasksService.getTask(id);
@@ -33,6 +40,10 @@ export class TasksController {
   @UsePipes()
   createTask(@Body() task: createTaskDto): createTaskDto {
     return this.tasksService.createTask(task);
+  }
+  @Get('/order/:order')
+  getTaskByOrder(@Param('order', ParseIntPipe) order: number) {
+    return 'order +10 = ' + (order + 10);
   }
   @Put('/:id')
   updateTask(@Param('id') id: string, @Body() task: updateTaskDto) {

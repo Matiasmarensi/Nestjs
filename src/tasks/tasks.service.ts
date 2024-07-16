@@ -19,6 +19,7 @@ export class TasksService {
   createTask(taskDto: createTaskDto) {
     const task = {
       ...taskDto,
+      order: this.tasks.length + 1,
       id: v4(),
     };
     this.tasks.push(task);
@@ -32,9 +33,11 @@ export class TasksService {
     }
     return taskFound;
   }
+  getTaskByOrder(order: number) {
+    return 'el orden mas 10 es ' + order + 10;
+  }
 
   updateTask(task: updateTaskDto, id: string) {
-    console.log('updateTask', task);
     return 'update tarea';
   }
 
