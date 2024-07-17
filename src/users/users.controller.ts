@@ -11,6 +11,6 @@ export class UsersController {
   }
   @Post('/users')
   createUser() {
-    return 'creando usuario sin body';
+    return this.usersService.createUser();
   }
 }
