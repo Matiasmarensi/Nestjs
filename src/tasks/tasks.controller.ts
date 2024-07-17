@@ -18,13 +18,15 @@ import { createTaskDto } from './dto/create-task.dto';
 import { updateTaskDto } from './dto/update-task.dto';
 import { SaludoPipe } from './pipes/saludo/saludo.pipe';
 import { AuthGuard } from './guard/auth/auth.guard';
-
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+@ApiTags('tasks')
 @Controller('/tasks')
 export class TasksController {
   tasksService: TasksService;
   constructor(tasksService: TasksService) {
     this.tasksService = tasksService;
   }
+  @ApiTags('tasks')
   @Get()
   getAllTasks(@Query() query: any) {
     return this.tasksService.getAllTasks();
@@ -36,6 +38,10 @@ export class TasksController {
     return 'Hola soy ' + query.name + ' y tengo ' + (query.age + 10) + ' años';
   }
   @Get('/:id')
+  @ApiOperation({ summary: 'obtener por id' })
+  @ApiResponse({ status: 200, description: 'ok' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
+  @ApiResponse({ status: 404, description: 'Not Found' })
   getTask(@Param('id') id: string) {
     return this.tasksService.getTask(id);
   }
